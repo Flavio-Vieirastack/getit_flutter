@@ -538,7 +538,7 @@ Agora na sua tela você poderá chamar os seus estados assim:
 O primeiro passo é criar uma abstract class que implemente de BlocStateListener passando a sua classe de estado pai assim:
 
 ```dart
-abstract class BlocListner implements AppBlocListener<BlocStates> {
+abstract class BlocListner implements BlocStateListener<BlocStates> {
   @override
   void buildListenableWidgets({required event, BuildContext? context}) {
     if (event is BlocSucess) {
