@@ -556,6 +556,34 @@ abstract class BlocListner implements AppBlocListener<BlocStates> {
 
 ```
 
+Com isso pronto chame o seu listner na sua BlocController usando o with assim:
+
+```dart
+class BlocController extends FlutteGetItBloc<BlocStates> with BlocBuilder, BlocListner {
+  final AlbumUsecase _albumUsecase;
+  BlocController({
+    required AlbumUsecase albumUsecase,
+  }) : _albumUsecase = albumUsecase;
+
+  Future<void> getAlbumData() async {
+    state.add(BlocLoading());
+    final data = await _albumUsecase();
+
+    data.fold(
+      (l) => state.add(
+        BlocError(
+          message: l.toString(),
+        ),
+      ),
+      (r) => state.add(
+        BlocSucess(albuns: r),
+      ),
+    );
+  }
+}
+```
+
+
 Feito isso no initState da sua tela adicione um listner ao stateOut da sua BlocController
 
 
