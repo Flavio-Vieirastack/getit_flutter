@@ -606,6 +606,17 @@ Feito isso no initState da sua tela adicione um listner ao stateOut da sua BlocC
   }
 
 ```
+
+Para dar dispose a stream basta chamar o metodo close no dispose da sua pagina;
+
+```dart
+  @override
+  void dispose() {
+    super.dispose();
+    bloc.close();
+  }
+
+```
 ## OBS.: Se você olhar o código fonte dos tipos de widget verá que eles são praticamente identicos, porém eles foram criado pensando em um propósito`(Semântica)`, a semântica de um projeto é muito importante para ajudar na manutenção. Sendo assim para você não ter que usar uma classe FlutterGetItRoute em um widget(Componente que não seja uma Page) e deixar o seu projeto totalmente sem sentido, criamos os Widgets certos para cada objetivo 'Page' ou 'Widget'
 
 ## Projeto com exemplo dos três tipos
