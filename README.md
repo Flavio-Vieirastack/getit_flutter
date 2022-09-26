@@ -358,8 +358,229 @@ class HomePage extends StatelessWidget {
 }
 ```
 
+## Exemplo de gerência de estado
+
+Primeiro passo gere a sua bloc controller ela deve estender de FlutterGetItBloc
+
+```dart
+class BlocController extends FlutteGetItBloc {
+  
+}
+```
+
+Feito isso crie as suas classes de estado
+
+```dart
+class BlocStates {}
+
+class BlocInitial extends BlocStates {
+  
+}
+
+class BlocLoading extends BlocStates {}
+
+class BlocError extends BlocStates {
+  final String message;
+  BlocError({
+    required this.message,
+  });
+}
+
+class BlocSucess extends BlocStates {
+  final List<AlbumEntity> albuns;
+  BlocSucess({
+    required this.albuns,
+  });
+}
+
+```
+
+Com as classes de estado prontas tipe a sua bloc controller com a classe de estado pai e adicone seus codigos aqui. No meu caso é uma busca a api do jsonPlaceHolder
+
+```dart
+class BlocController extends FlutteGetItBloc<BlocStates> {
+  final AlbumUsecase _albumUsecase;
+  BlocController({
+    required AlbumUsecase albumUsecase,
+  }) : _albumUsecase = albumUsecase;
+
+  Future<void> getAlbumData() async {
+    state.add(BlocLoading());
+    final data = await _albumUsecase();
+
+    data.fold(
+      (l) => state.add(
+        BlocError(
+          message: l.toString(),
+        ),
+      ),
+      (r) => state.add(
+        BlocSucess(albuns: r),
+      ),
+    );
+  }
+}
+```
+
+Para adicionar os seus estados, basta chamar a variável state e adicionar os seus estados ali.
+
+## Usando os helpers para criar estados de widgets
+
+Para criar os estados da sua tela baseado na sua bloc controller crie uma abstract class que implemente BlocBuildWidget e passe a sua classe de estado pai.
+
+```dart
+abstract class BlocBuilder implements BlocBuildWidget<BlocStates> {
+  @override
+  Widget buidWidget({
+    required BuildContext context,
+    required AsyncSnapshot<BlocStates> snapShot,
+  }) {
+    if (snapShot.hasData) {
+      final data = snapShot.data;
+      log(data.toString());
+      if (data is BlocLoading) {
+        return const Center(
+          child: CircularProgressIndicator.adaptive(),
+        );
+      } else if (data is BlocSucess) {
+        return ListView.separated(
+          itemCount: data.albuns.length,
+          itemBuilder: (context, index) {
+            final albuns = data.albuns[index];
+            return ListTile(
+              title: Text(albuns.title),
+              leading: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  albuns.tumbailUrl,
+                ),
+              ),
+              trailing: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: SizedBox(
+                  height: 80,
+                  width: 80,
+                  child: Image.network(
+                    albuns.url,
+                  ),
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const Divider();
+          },
+        );
+      } else if (data is BlocError) {
+        return Text(data.message);
+      } else {
+        return const SizedBox.shrink();
+      }
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+}
+
+```
+
+Aqui escreva todos os widgets que deverão ser buildados em cada estado. Com isso pronto vá na sua controller e faça o with dessa classe.
+
+```dart
+class BlocController extends FlutteGetItBloc<BlocStates> with BlocBuilder {
+  final AlbumUsecase _albumUsecase;
+  BlocController({
+    required AlbumUsecase albumUsecase,
+  }) : _albumUsecase = albumUsecase;
+
+  Future<void> getAlbumData() async {
+    state.add(BlocLoading());
+    final data = await _albumUsecase();
+
+    data.fold(
+      (l) => state.add(
+        BlocError(
+          message: l.toString(),
+        ),
+      ),
+      (r) => state.add(
+        BlocSucess(albuns: r),
+      ),
+    );
+  }
+}
+```
+
+
+Agora na sua tela você poderá chamar os seus estados assim:
+
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Bloc page'),
+      ),
+      body: StreamBuilder<BlocStates>(
+        stream: bloc.stateOut,
+        builder: (context, snapshot) => bloc.buidWidget(
+          context: context,
+          snapShot: snapshot,
+        ),
+      ),
+    );
+  }
+}
+
+```
+
+## Escutando estados
+
+O primeiro passo é criar uma abstract class que implemente de BlocStateListener passando a sua classe de estado pai assim:
+
+```dart
+abstract class BlocListner implements AppBlocListener<BlocStates> {
+  @override
+  void buildListenableWidgets({required event, BuildContext? context}) {
+    if (event is BlocSucess) {
+      ScaffoldMessenger.of(context!).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            'Dados carregados com sucesso',
+          ),
+        ),
+      );
+    }
+  }
+}
+
+```
+
+Feito isso no initState da sua tela adicione um listner ao stateOut da sua BlocController
+
+
+```dart
+@override
+  void initState() {
+    super.initState();
+    bloc = GetIt.I.get<BlocController>();
+    bloc.stateOut.listen(
+      (event) => bloc.buildListenableWidgets(
+        event: event,
+        context: context,
+      ),
+    );
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        await bloc.getAlbumData();
+      },
+    );
+  }
+
+```
 ## OBS.: Se você olhar o código fonte dos tipos de widget verá que eles são praticamente identicos, porém eles foram criado pensando em um propósito`(Semântica)`, a semântica de um projeto é muito importante para ajudar na manutenção. Sendo assim para você não ter que usar uma classe FlutterGetItRoute em um widget(Componente que não seja uma Page) e deixar o seu projeto totalmente sem sentido, criamos os Widgets certos para cada objetivo 'Page' ou 'Widget'
 
 ## Projeto com exemplo dos três tipos
 
 [Projeto exemplo](https://github.com/rodrigorahman/example_flutter_getit)
+
