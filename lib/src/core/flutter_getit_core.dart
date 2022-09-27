@@ -7,7 +7,6 @@ import '../../flutter_getit.dart';
 abstract class FlutterGetitCore extends StatefulWidget {
   List<Dependencie> get injections => [];
   WidgetBuilder get view;
-  onClose() {}
   const FlutterGetitCore({super.key});
 
   @override
@@ -41,7 +40,6 @@ class _FlutterGetitCoreState extends State<FlutterGetitCore> {
   void dispose() {
     super.dispose();
     _unRegisterAllBindings();
-    widget.onClose();
   }
 
   @override
