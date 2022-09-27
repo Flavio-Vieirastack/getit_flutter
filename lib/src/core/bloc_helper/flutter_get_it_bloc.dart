@@ -6,8 +6,12 @@ abstract class FlutteGetItBloc<T extends Object> {
 
   Stream<T> get stateOut => state.stream;
 
-  Future<void> close() async {
-    await stateOut.drain();
+  Future<void> close({
+    bool enableDrain = true,
+  }) async {
+    if (enableDrain) {
+      await stateOut.drain();
+    }
     state.close();
   }
 }
