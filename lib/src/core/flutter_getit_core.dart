@@ -23,7 +23,7 @@ class _FlutterGetitCoreState extends State<FlutterGetitCore> {
     bindings.addAll(widget.injections);
     log(
       name: 'Module',
-      '${widget.view.toString()} initialized',
+      '${widget.view.toString().replaceAll('(BuildContext) =>', '')} initialized',
     );
   }
 
@@ -31,8 +31,8 @@ class _FlutterGetitCoreState extends State<FlutterGetitCore> {
     for (var bind in bindings) {
       bind.unRegister();
       log(
-        error: 'Dispose',
-        '${bind.toString()} disposed',
+        name: 'Dispose',
+        '${bind.toString().replaceAll('Instance of ', '')} disposed',
       );
     }
   }
