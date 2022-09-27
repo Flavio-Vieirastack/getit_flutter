@@ -22,7 +22,7 @@ class _FlutterGetitCoreState extends State<FlutterGetitCore> {
     bindings.addAll(widget.injections);
     log(
       name: 'Module',
-      '${widget.view.toString().replaceAll('closure (BuildContext) =>', '')} initialized',
+      '${widget.view.toString().replaceAll('Closure: (BuildContext) => ', '')} initialized',
     );
   }
 
