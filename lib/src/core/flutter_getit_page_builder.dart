@@ -9,7 +9,7 @@ class FlutterGetItPageBuilder extends FlutterGetitCore {
   final WidgetBuilder page;
 
   /// Informe os bindings que devem ser carregados e descartados
-  final BindBuilder binding;
+  final DependenciesBuilder binding;
 
   const FlutterGetItPageBuilder({
     super.key,
@@ -21,5 +21,5 @@ class FlutterGetItPageBuilder extends FlutterGetitCore {
   WidgetBuilder get view => page;
 
   @override
-  List<Bind> get injections => [binding()];
+  List<Dependencie> get injections => [binding()];
 }

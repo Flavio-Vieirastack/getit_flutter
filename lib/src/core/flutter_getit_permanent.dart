@@ -4,13 +4,13 @@ import 'package:flutter_getit/src/core/typedefs.dart';
 
 import '../../flutter_getit.dart';
 
-class FlutterGetItApplicationBinding extends FlutterGetitCore {
+class FlutterGetItPermanent extends FlutterGetitCore {
   final Widget? child;
   final ApplicationBuilder? builder;
-  final ApplicationBindingsBuilder? bindingsBuilder;
-  final ApplicationBindings? bindings;
+  final ApplicationDependenciesBuilder? bindingsBuilder;
+  final ApplicationDependencies? bindings;
 
-  const FlutterGetItApplicationBinding({
+  const FlutterGetItPermanent({
     super.key,
     this.child,
     this.builder,
@@ -22,8 +22,8 @@ class FlutterGetItApplicationBinding extends FlutterGetitCore {
             'You must send only one of the attributes (bindingBuilder or bindings)');
 
   @override
-  List<Bind> get injections {
-    var bindingsLoad = <Bind>[];
+  List<Dependencie> get injections {
+    var bindingsLoad = <Dependencie>[];
 
     if (bindings != null) {
       bindingsLoad = bindings!.bindings();
@@ -48,6 +48,6 @@ class FlutterGetItApplicationBinding extends FlutterGetitCore {
         
 }
 
-abstract class ApplicationBindings {
-  List<Bind> bindings();
+abstract class ApplicationDependencies {
+  List<Dependencie> bindings();
 }

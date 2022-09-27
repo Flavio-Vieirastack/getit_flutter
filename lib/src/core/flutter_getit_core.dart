@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../flutter_getit.dart';
 
 abstract class FlutterGetitCore extends StatefulWidget {
-  List<Bind> get injections => [];
+  List<Dependencie> get injections => [];
   WidgetBuilder get view;
   executeOnInit() {}
   executeOnReady() {}
@@ -14,7 +14,7 @@ abstract class FlutterGetitCore extends StatefulWidget {
 }
 
 class _FlutterGetitCoreState extends State<FlutterGetitCore> {
-  List<Bind> bindings = [];
+  List<Dependencie> bindings = [];
 
   @override
   void initState() {

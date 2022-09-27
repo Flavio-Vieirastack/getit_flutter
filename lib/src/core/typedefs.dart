@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 
 import '../../flutter_getit.dart';
 
-typedef ApplicationBindingsBuilder = List<Bind> Function();
+typedef ApplicationDependenciesBuilder = List<Dependencie> Function();
 
-typedef BindBuilder = Bind Function();
+typedef DependenciesBuilder = Dependencie Function();
 
-typedef BindRegister<T> = T Function(Injector i);
+typedef DependenciesRegister<T> = T Function(Injector i);
 
 typedef ApplicationBuilder = Widget Function(
     BuildContext context, Widget? child);

@@ -5,7 +5,7 @@ import '../../flutter_getit.dart';
 
 abstract class FlutterGetItWidget extends FlutterGetitCore {
   /// Getter para declaração do bindings que serão inicializados e descartados na inicialização e descarte da view
-  List<Bind> get bindings => [];
+  List<Dependencie> get bindings => [];
 
   /// Getter para informar qual widget deve ser reenderizado no carregamento
   WidgetBuilder get widget;
@@ -16,5 +16,5 @@ abstract class FlutterGetItWidget extends FlutterGetitCore {
   WidgetBuilder get view => widget;
 
   @override
-  List<Bind> get injections => bindings;
+  List<Dependencie> get injections => bindings;
 }
