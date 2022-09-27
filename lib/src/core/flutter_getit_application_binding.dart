@@ -44,6 +44,8 @@ class FlutterGetItApplicationBinding extends FlutterGetitCore {
           throw Exception('Widget notfound');
         }
       };
+      
+        
 }
 
 abstract class ApplicationBindings {

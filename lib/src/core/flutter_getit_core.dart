@@ -5,7 +5,8 @@ import '../../flutter_getit.dart';
 abstract class FlutterGetitCore extends StatefulWidget {
   List<Bind> get injections => [];
   WidgetBuilder get view;
-
+  executeOnInit() {}
+  executeOnReady() {}
   const FlutterGetitCore({super.key});
 
   @override
@@ -19,6 +20,10 @@ class _FlutterGetitCoreState extends State<FlutterGetitCore> {
   void initState() {
     super.initState();
     bindings.addAll(widget.injections);
+    widget.executeOnInit();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.executeOnReady();
+    });
   }
 
   void _unRegisterAllBindings() {
