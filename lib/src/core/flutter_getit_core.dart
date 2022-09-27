@@ -7,6 +7,9 @@ import '../../flutter_getit.dart';
 abstract class FlutterGetitCore extends StatefulWidget {
   List<Dependencie> get injections => [];
   WidgetBuilder get view;
+  void executeOnInit() {}
+  void executeOnReady() {}
+  void executeOnClose() {}
   const FlutterGetitCore({super.key});
 
   @override
@@ -20,9 +23,13 @@ class _FlutterGetitCoreState extends State<FlutterGetitCore> {
   void initState() {
     super.initState();
     bindings.addAll(widget.injections);
+    widget.executeOnInit();
     log(
       name: 'Module',
       '${widget.view.toString().replaceAll('(BuildContext) =>', '')} initialized',
+    );
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => widget.executeOnReady(),
     );
   }
 
@@ -40,6 +47,7 @@ class _FlutterGetitCoreState extends State<FlutterGetitCore> {
   void dispose() {
     super.dispose();
     _unRegisterAllBindings();
+    widget.executeOnClose();
   }
 
   @override
