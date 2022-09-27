@@ -4,14 +4,14 @@ Projeto que permite você utilizar o get_it como um dependency injection porém 
 
 ## Existem 4 tipos possíveis de Widgets
 
-- **FlutterGetItApplicationBinding**
+- **FlutterGetItPermanent**
 - **FlutterGetItPageRoute**
 - **FlutterGetItWidget**
 - **FlutterGetItPageBuilder**
 
 ## Entenda a diferença de cada um deles
 
-### FlutterGetItApplicationBinding
+### FlutterGetItPermanent
 
 Application binding são os bindings que NUNCA serão removido de dentro do get_it a ideia é disponibilizar as classes que são utilizadas por diversas páginas do sistemas, fazendo com que você não precise declarar em todas as views
 
@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return FlutterGetItApplicationBinding(
+    return FlutterGetItPermanent(
       bindingsBuilder: () => [
-        Bind.lazySingleton((i) => UserModel(
+        Dependencie.lazySingleton((i) => UserModel(
             name: 'Rodrigo Rahman',
             email: 'rodrigorahman@academiadoflutter.com.br'))
       ],
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           '/': (context) => FlutterGetItPageBuilder(
-                binding: () => Bind.singleton((i) => HomeController()),
+                binding: () => Dependencie.singleton((i) => HomeController()),
                 page: (context) => const HomePage(),
               ),
           '/products': (context) => const ProductsRoute()
@@ -46,15 +46,15 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-## Configurando FlutterGetItApplicationBinding
+## Configurando FlutterGetItPermanent
 
-Existem algumas possiblidades de configuração do FlutterGetItApplicationBinding
+Existem algumas possiblidades de configuração do FlutterGetItPermanent
 
 Descrição dos Atributos
 
 >**child:** Nesse atributo você deve informar o widget que será iniciado normalmente será adicionado o MaterialApp
 
->**builder:** Esse atributo pode ser utilizado para quando você já quer disponível o BuildContext ou mesmo para buscar alguma classe que foi injetada nos bindings do FlutterGetItApplicationBinding.
+>**builder:** Esse atributo pode ser utilizado para quando você já quer disponível o BuildContext ou mesmo para buscar alguma classe que foi injetada nos bindings do FlutterGetItPermanent.
 
 >**bindingsBuilder:** Esse atributo você deve informar para fazer os bindings, aconselhamos a utilização dele somente se você tiver poucas classes para adicionar no get_it pois caso tenha uma quantidade grande aconselhamos a utilização do bindings deixando assim seu código muito mais organizado.
 
@@ -68,9 +68,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return FlutterGetItApplicationBinding(
+    return FlutterGetItPermanent(
       bindingsBuilder: () => [
-        Bind.lazySingleton((i) => UserModel(
+        Dependencie.lazySingleton((i) => UserModel(
         name: 'Rodrigo Rahman',
         email: 'rodrigorahman@academiadoflutter.com.br'))
       ],
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           '/': (context) => FlutterGetItPageBuilder(
-                binding: () => Bind.singleton((i) => HomeController()),
+                binding: () => Dependencie.singleton((i) => HomeController()),
                 page: (context) => const HomePage(),
               ),
           '/products': (context) => const ProductsRoute()
@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return FlutterGetItApplicationBinding(
+    return FlutterGetItPermanent(
       bindings: ExampleApplicationBindings(),
       builder: (context, child) {
         debugPrint(
@@ -112,7 +112,7 @@ class MyApp extends StatelessWidget {
           ),
           routes: {
             '/': (context) => FlutterGetItPageBuilder(
-                  binding: () => Bind.singleton((i) => HomeController()),
+                  binding: () => Dependencie.singleton((i) => HomeController()),
                   page: (context) => const HomePage(),
                 ),
             '/products': (context) => const ProductsRoute()
@@ -135,7 +135,7 @@ class ProductsRoute extends FlutterGetItPageRoute {
 
   @override
   List<Bind<Object>> get bindings => [
-        Bind.singleton((i) => ProductsController()),
+        Dependencie.singleton((i) => ProductsController()),
       ];
 
   @override
@@ -176,8 +176,8 @@ Essa classe deve ser utilizada quando você quer ter esse mesmo suporte porém p
 ```dart
 class CounterWidget extends FlutterGetitWidget {
   @override
-  List<Bind<Object>> get bindings =>
-      [Bind.lazySingleton((i) => CounterController())];
+  List<Dependencie<Object>> get bindings =>
+      [Dependencie.lazySingleton((i) => CounterController())];
 
   const CounterWidget({super.key});
 
@@ -229,7 +229,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => FlutterGetItPageBuilder(
-              binding: () => Bind.singleton((i) => HomeController()),
+              binding: () => Dependencie.singleton((i) => HomeController()),
               page: (context) => const HomePage(),
             ),
       },
