@@ -7,6 +7,7 @@ abstract class FlutterGetitCore extends StatefulWidget {
   WidgetBuilder get view;
   executeOnInit() {}
   executeOnReady() {}
+  onClose() {}
   const FlutterGetitCore({super.key});
 
   @override
@@ -34,8 +35,9 @@ class _FlutterGetitCoreState extends State<FlutterGetitCore> {
 
   @override
   void dispose() {
-    _unRegisterAllBindings();
     super.dispose();
+    _unRegisterAllBindings();
+    widget.onClose();
   }
 
   @override
