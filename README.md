@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
     return FlutterGetItPermanent(
       bindingsBuilder: () => [
         Dependencie.lazySingleton((i) => UserModel(
-            name: 'Rodrigo Rahman',
-            email: 'rodrigorahman@academiadoflutter.com.br'))
+            name: '',
+            email: ''))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -71,8 +71,8 @@ class MyApp extends StatelessWidget {
     return FlutterGetItPermanent(
       bindingsBuilder: () => [
         Dependencie.lazySingleton((i) => UserModel(
-        name: 'Rodrigo Rahman',
-        email: 'rodrigorahman@academiadoflutter.com.br'))
+        name: '',
+        email: ''))
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -619,7 +619,4 @@ Para dar dispose a stream basta chamar o metodo close no dispose da sua pagina;
 ```
 ## OBS.: Se você olhar o código fonte dos tipos de widget verá que eles são praticamente identicos, porém eles foram criado pensando em um propósito`(Semântica)`, a semântica de um projeto é muito importante para ajudar na manutenção. Sendo assim para você não ter que usar uma classe FlutterGetItRoute em um widget(Componente que não seja uma Page) e deixar o seu projeto totalmente sem sentido, criamos os Widgets certos para cada objetivo 'Page' ou 'Widget'
 
-## Projeto com exemplo dos três tipos
-
-[Projeto exemplo](https://github.com/rodrigorahman/example_flutter_getit)
 
