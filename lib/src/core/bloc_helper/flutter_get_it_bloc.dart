@@ -20,7 +20,7 @@ abstract class FlutteGetItBloc<T extends Object> {
 }
 
 abstract class BlocBuildWidget<T> {
-  Widget buidWidget({
+  Widget buildWidget({
     required BuildContext context,
     required AsyncSnapshot<T> snapshot,
   });
