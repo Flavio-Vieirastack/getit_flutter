@@ -19,8 +19,8 @@ abstract class FlutteGetItBloc<T extends Object> {
   }
 }
 
-abstract class BlocBuildWidget<T> {
-  Widget buildWidget({
+abstract class BlocBuildWidget<T, W> {
+  W buildWidget({
     required BuildContext context,
     required AsyncSnapshot<T> snapshot,
   });
