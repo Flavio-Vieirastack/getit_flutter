@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-abstract class FlutteGetItBloc<T extends Object> {
+abstract class FlutterGetItBloc<T extends Object> {
   final state = StreamController<T>.broadcast();
 
   Stream<T> get stateOut => state.stream;
