@@ -5,7 +5,7 @@ import '../../flutter_getit.dart';
 
 abstract class FlutterGetItPageRoute extends FlutterGetitCore {
   /// Getter para declaração do bindings que serão inicializados e descartados na inicialização e descarte da view
-  List<Dependencie> get bindings => [];
+  List<Dependency> get bindings => [];
 
   /// Getter para informar qual Page deve ser reenderizado no carregamento
   WidgetBuilder get page;
@@ -18,5 +18,5 @@ abstract class FlutterGetItPageRoute extends FlutterGetitCore {
   WidgetBuilder get view => page;
 
   @override
-  List<Dependencie> get injections => bindings;
+  List<Dependency> get injections => bindings;
 }

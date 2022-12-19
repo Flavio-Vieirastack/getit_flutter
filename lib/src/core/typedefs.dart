@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 
 import '../../flutter_getit.dart';
 
-typedef ApplicationDependenciesBuilder = List<Dependencie> Function();
+typedef ApplicationDependenciesBuilder = List<Dependency> Function();
 
-typedef DependenciesBuilder = Dependencie Function();
+typedef DependenciesBuilder = Dependency Function();
 
 typedef DependenciesRegister<T> = T Function(Injector i);
 

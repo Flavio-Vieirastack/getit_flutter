@@ -22,8 +22,8 @@ class FlutterGetItPermanent extends FlutterGetitCore {
             'You must send only one of the attributes (bindingBuilder or bindings)');
 
   @override
-  List<Dependencie> get injections {
-    var bindingsLoad = <Dependencie>[];
+  List<Dependency> get injections {
+    var bindingsLoad = <Dependency>[];
 
     if (bindings != null) {
       bindingsLoad = bindings!.bindings();
@@ -49,5 +49,5 @@ class FlutterGetItPermanent extends FlutterGetitCore {
 }
 
 abstract class ApplicationDependencies {
-  List<Dependencie> bindings();
+  List<Dependency> bindings();
 }

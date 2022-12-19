@@ -21,5 +21,5 @@ class FlutterGetItPageBuilder extends FlutterGetitCore {
   WidgetBuilder get view => page;
 
   @override
-  List<Dependencie> get injections => [binding()];
+  List<Dependency> get injections => [binding()];
 }
