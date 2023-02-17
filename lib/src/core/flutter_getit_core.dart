@@ -19,11 +19,18 @@ class _FlutterGetitCoreState extends State<FlutterGetitCore> {
   @override
   void initState() {
     super.initState();
-    bindings.addAll(widget.injections);
-    log(
-      name: 'Module',
-      '${widget.view.toString().replaceAll('Closure: (BuildContext) => ', '')} Initialized',
-    );
+    // bindings.addAll(widget.injections);
+    // log(
+    //   name: 'Module',
+    //   '${widget.view.toString().replaceAll('Closure: (BuildContext) => ', '')} Initialized',
+    // );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bindings.addAll(widget.injections);
+      log(
+        name: 'Module',
+        '${widget.view.toString().replaceAll('Closure: (BuildContext) => ', '')} Initialized',
+      );
+    });
   }
 
   void _unRegisterAllBindings() {
