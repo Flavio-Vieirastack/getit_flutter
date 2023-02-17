@@ -6,8 +6,12 @@ import '../../flutter_getit.dart';
 
 abstract class FlutterGetitCore extends StatefulWidget {
   List<Dependency> get injections => [];
+  final bool lazyInject;
   WidgetBuilder get view;
-  const FlutterGetitCore({super.key});
+  const FlutterGetitCore({
+    Key? key,
+    this.lazyInject = false,
+  }) : super(key: key);
 
   @override
   State<FlutterGetitCore> createState() => _FlutterGetitCoreState();
@@ -19,18 +23,22 @@ class _FlutterGetitCoreState extends State<FlutterGetitCore> {
   @override
   void initState() {
     super.initState();
-    // bindings.addAll(widget.injections);
-    // log(
-    //   name: 'Module',
-    //   '${widget.view.toString().replaceAll('Closure: (BuildContext) => ', '')} Initialized',
-    // );
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (widget.lazyInject == false) {
       bindings.addAll(widget.injections);
       log(
         name: 'Module',
         '${widget.view.toString().replaceAll('Closure: (BuildContext) => ', '')} Initialized',
       );
-    });
+    }
+    if (widget.lazyInject) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        bindings.addAll(widget.injections);
+        log(
+          name: 'Module',
+          '${widget.view.toString().replaceAll('Closure: (BuildContext) => ', '')} Initialized',
+        );
+      });
+    }
   }
 
   void _unRegisterAllBindings() {

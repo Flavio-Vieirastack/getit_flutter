@@ -12,6 +12,7 @@ abstract class FlutterGetItPageRoute extends FlutterGetitCore {
 
   const FlutterGetItPageRoute({
     super.key,
+    super.lazyInject,
   });
 
   @override
