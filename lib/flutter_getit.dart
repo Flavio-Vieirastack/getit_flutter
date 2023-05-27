@@ -7,3 +7,4 @@ export 'src/core/flutter_getit_widget.dart';
 export 'src/dependency_injector/dependencies.dart';
 export 'src/dependency_injector/injector.dart';
 export 'src/core/bloc_helper/flutter_get_it_bloc.dart';
+export 'src/core/reset/reset_singleton.dart';
