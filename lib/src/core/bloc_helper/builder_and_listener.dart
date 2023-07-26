@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../flutter_getit.dart';
 
-class BlocBuilder<T extends FlutterGetItBloc<T>> extends StatelessWidget {
+class BlocBuilder<T extends Object> extends StatelessWidget {
   final Widget Function(T? state) builder;
   final T? initialData;
   const BlocBuilder({
